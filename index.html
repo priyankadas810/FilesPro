@@ -1,0 +1,85 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<head>
+  <style>
+    * {
+        box-sizing: border-box;
+      }
+      
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px; 
+      }
+      
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        min-height: 300px;
+      }
+
+    .heading {
+
+     } 
+     
+    .myDiv {
+      border-radius: 20px;
+      background-color: #f8b400;    
+      text-align: center;
+      color: #2c5d63;
+      margin-left: 10px;
+      margin-right: 150px;
+    } 
+
+    .myDiv1 {
+      border-radius: 5px;
+      background-color: #f8b400;    
+      text-align: center;
+      margin-top: 30px;
+      
+      margin-right: 100px;
+      color: #2c5d63;
+      font-weight: bold;
+    } 
+
+    .myDiv2 {
+      border-radius: 5px;
+      background-color: #f8b400;    
+      text-align: center;
+      margin-top: 30px;
+      
+      margin-right: 100px;
+      color: #2c5d63;
+      font-weight: bold;
+    } 
+</style>    
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+</head>
+<form method="post">{% csrf_token %}
+
+<div class="heading">
+<h4 class="myDiv">You Can Modify Your Files Here</h4>
+</div>
+<div class="row" >
+<div class="column">
+<br>  
+<br>  
+<a href="{% url 'fileupload' %}"style= "color: #d96459; font-weight: bold; font-size: 30px; margin-right: 95px;" ><img src="{% static 'images/file.png' %}" width='75' height='75'></a>
+<p class="myDiv1">Click on icon to check modified file</p>
+</div>
+
+
+<div class="column">
+  <br>  
+  <br>  
+<a href="{% url 'pdfconverter' %}"style="color: #E7F6F2; font-weight: bold; font-size: 30px; height: 50%; margin-right: 100px;"><img src="{% static 'images/wordtopdf.jpg' %}" width='150' height='75'></a>
+<p class="myDiv2">Word to PDF Conversion</p>
+</div>
+</div>
+</form>
+
+{% endblock %}

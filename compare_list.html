@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% block content_header %}
+    <h2>LIST OF ALL COMPARED FILES</h2>
+  
+  {% endblock %}
+
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>ORIGINAL FILE</th>
+        <th>FILE TO COMPARE</th>
+        
+      </tr>
+    </thead>{% for file in display %}
+    <tbody>     
+        <tr>          
+          <td>
+            <a href="{{ file.Originalfile.url }}" class="btn btn-primary btn-sm" target="_blank" style="background-color: #bd5734;
+            color: aliceblue; font-weight: bold; border: 2px solid black">
+              Download
+            </a>
+          </td>
+          <td>
+            <a href="{{ file.Comparedfile.url }}" class="btn btn-primary btn-sm" target="_blank" style="background-color: #bd5734;
+            color: aliceblue; font-weight: bold; border: 2px solid black">
+              Download
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

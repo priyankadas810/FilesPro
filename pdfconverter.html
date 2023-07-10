@@ -1,0 +1,166 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/app2.css' %}">
+  
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}"> {% endcomment %}
+  <title>{% block title %}My Site{% endblock %}</title>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body{
+      min-height: 100vh;
+      background-image: linear-gradient(#2c786c, #f8b400);;
+
+    }
+
+    .bubbles{
+      position: relative;
+      display: flex;
+    }
+
+    .bubbles span{
+      position: relative;
+      width: 30px;
+      height: 30px;
+      background: #4fc3dc;
+      margin: 0 8px;
+      
+      border-radius: 50%;
+      box-shadow: 0 0 0 10px #4fc3dc,
+      0 0 50px #4fc3dc,
+      0 0 100px #4fc3dc;
+      animation: animate 15s linear infinite;
+      animation-duration: calc(125s/ var(--i));
+
+    }
+    .bubbles span: nth-child(even){
+      background: #ff2d75;
+      box-shadow: 0 0 0 10px #ff2d7544,
+      0 0 50px #ff2d75,
+      0 0 100px #ff2d75; 
+    }
+    @keyframes animate
+    {
+      0%
+      {
+        transform: translateY(100vh) scale(0);
+      }  
+      100%
+      {
+        transform: translateY(-10vh) scale(1);
+      }
+    }
+
+    .card-body{
+      
+      box-shadow: 5px 20px 20px blue inset
+      color: aliceblue;
+      text-align: center;
+      
+  }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #004445;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: aliceblue;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-weight bold;
+    }
+    
+    li a:hover {
+      background-color: #f6eedf;
+    }
+
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a class="active" href="{% url 'index' %}" >Home</a></li>
+    <li><a href="{% url 'fileupload' %}" >Compare Files</a></li>
+    <li><a href="{% url 'pdfconverter' %}"> Word to PDF</a></li>
+  
+  </ul>
+
+  <br>
+  <div class="container" style="min-height: 100vh;background-color: #c192c;">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-md-12">
+                <div class="card-body text-align-center" style="background-color: #faf5e4; justify-text: center; padding-top: 30px; padding bottom: 10px;border: 10px; border-radius: 36px; padding-left: 300px;  margin-top: 40px;margin-left:50px;align: center;box-shadow: 5px 5px 5px 5px #2c5d63;" >
+                    
+                    {% block content %}
+                    {% for message in messages %}
+                        
+                      <div class="alert alert-success">
+                          <a class="close" href="#" data-dismiss="alert">×</a>
+                              {{ message }}
+                      </div>
+                    
+                    {% endfor %}
+                      <h2 style="margin-right: 200px; padding-right: 90px;">FILE COMPARE</h2>
+                      <div class="line" style="width: 23%;height: 15px;border-bottom: 1px solid black; padding-top: 2px; margin-left: 20px;position: absolute;"></div>
+                     
+                      <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <br>
+                        <button type="submit" class="btn btn-primary" id="btn" style="background-color: #2c786c; margin-bottom: 20px; margin-right: 300px; font-weight: bold; border: 2px solid #004445; margin-right: 100px; margin-top: 50px;" onmouseover="">CONVERT</button>
+                      </form>
+                    
+                    <script>
+                        {% comment %} const file = document.getElementsByClassName(''); {% endcomment %}
+                        const file = document.getElementById('id_Wordfile');
+                        file.style.marginRight = '300px';
+                        file.style.width = '250px';
+                        file.style.border = '2px solid black';
+                        file.style.borderRadius = '5px';
+                        file.style.marginTop= '20px';
+                        
+
+                        const button = document.getElementById('btn');
+                        button.style.marginRight = '300px';
+                        
+                        
+                        const file3 = document.querySelectorAll(".control-label.requiredField");
+                        file3[0].style.marginTop= "50px";
+
+                        file3[0].style.paddingRight = "55%";
+                        file3[0].style.fontWeight = "bold";
+                        
+                    </script>
+                           
+                    {% endblock %}
+                    
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
